@@ -1,4 +1,4 @@
-<title>Getters and Setters</title>
+<title>Privacy</title>
 
 <?php
 
@@ -6,17 +6,21 @@ class Student
 {
 
     // properties
-    public $id;
-    public $birthYear;
+    // canbe changed by class
+    private $id;
+    private $birthYear;
+    private bool $isSuspended;
+
+    // can be chnaged globally
     public $fullName;
-    public bool $isSuspended;
 
     // contructor
-    public function __construct(int $id, string $fullName, int $birthYear)
+    public function __construct(int $id, string $fullName, int $birthYear, bool $isSuspended = false)
     {
         $this->id = $id;
         $this->birthYear = $birthYear;
         $this->fullName = $fullName;
+        $this->isSuspended = $isSuspended;
     }
 
     // functions/methods
@@ -40,10 +44,24 @@ class Student
     }
 }
 
-$fatima = new Student(21, "Fatima Kurban Sheikh", 2001);
+// declared students
+$peter = new Student(45, "Peter John D'suza", 2001);
+echo $peter->intro();
 
-$fatima->setBirthYear(2005);
+echo "<br />";
 
-echo $fatima->intro();
+$erika = new Student(69, "Erika Gary May", 2003);
+echo $erika->intro();
+
+// chnages in properties
+echo var_dump($erika);
+
+echo $erika->getBirthYear(); //public property accessible
+
+try {
+    echo $erika->birthYear; // private property will cause error
+} catch (\Throwable $th) {
+    echo $th;
+}
 
 ?>
